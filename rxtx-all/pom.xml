@@ -34,6 +34,15 @@
         </license>
     </licenses>
 
+    <dependencies>
+        <dependency>
+            <groupId>gnu.io</groupId>
+            <artifactId>rxtx</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../libs/RXTXcomm.jar</systemPath>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -45,9 +54,9 @@
                         <Export-Package>gnu.io;version="2.1.7.r2"</Export-Package>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Include-Resource>{RxTx-LICENSE.txt},
-                            src/main/resources/native,
-                            @src/main/resources/RXTXcomm.jar
+                            src/main/resources/native
                         </Include-Resource>
+                        <Embed-Dependency>*;artifactId=rxtx;inline=true</Embed-Dependency>
                         <Bundle-NativeCode>
                             i686-linux-gnu/librxtxSerial.so;processor=x86;osname=Linux,
                             x86_64-linux-gnu/librxtxSerial.so;processor=x86-64;osname=Linux,
