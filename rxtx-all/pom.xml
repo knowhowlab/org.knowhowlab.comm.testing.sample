@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.knowhowlab.comm.sample</groupId>
+        <artifactId>org.knowhowlab.comm.testing.sample</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>rxtx-all</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>KnowHowLab COMM Testing Sample - RxTx Bundle</name>
+    <description>KnowHowLab COMM Testing Sample - RxTx Bundle</description>
+    <url>http://knowhowlab.org</url>
+
+    <developers>
+        <developer>
+            <name>Dmytro Pishchukhin</name>
+            <timezone>GMT+1</timezone>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>Know-How Lab</name>
+        <url>http://knowhowlab.org</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>gnu.io;version="2.1.7.r2"</Export-Package>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Include-Resource>{RxTx-LICENSE.txt},
+                            src/main/resources/native,
+                            @src/main/resources/RXTXcomm.jar
+                        </Include-Resource>
+                        <Bundle-NativeCode>
+                            i686-linux-gnu/librxtxSerial.so;processor=x86;osname=Linux,
+                            x86_64-linux-gnu/librxtxSerial.so;processor=x86-64;osname=Linux,
+                            i386-mingw32/rxtxSerial.dll;processor=x86;osname=Win32,
+                            x64-osx/librxtxSerial.jnilib;processor=x86-64;osname=MacOSX
+                        </Bundle-NativeCode>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
