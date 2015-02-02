@@ -198,7 +198,7 @@
                                         <param>--workingDirectory=${package.name}</param>
                                         <param>
                                             <![CDATA[
-                                            --vmOptions=-Dorg.osgi.service.http.port=${port} -Dorg.osgi.service.http.useNIO=true -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+                                            --vmOptions=-Dorg.osgi.service.http.port=${port} -Dorg.osgi.service.http.useNIO=true -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dlogback.configurationFile=${project.basedir}/logback.xml
                                             ]]>
                                         </param>
 
