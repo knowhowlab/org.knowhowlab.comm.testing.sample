@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -47,17 +48,10 @@
     <scm>
         <connection>scm:git:git@github.com:knowhowlab/org.knowhowlab.comm.testing.sample.git</connection>
         <url>git@github.com:knowhowlab/org.knowhowlab.comm.testing.git</url>
-        <developerConnection>scm:git:git@github.com:knowhowlab/org.knowhowlab.comm.testing.sample.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:knowhowlab/org.knowhowlab.comm.testing.sample.git
+        </developerConnection>
         <tag>HEAD</tag>
     </scm>
-
-    <modules>
-        <module>rxtx-all</module>
-        <module>display-driver</module>
-        <module>barcode-scanner-driver</module>
-        <module>core</module>
-        <module>it</module>
-    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -162,4 +156,90 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>rxtx-all</module>
+                <module>display-driver</module>
+                <module>barcode-scanner-driver</module>
+                <module>core</module>
+                <module>it</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>run</id>
+            <properties>
+                <port>8080</port>
+                <package.name>.demo</package.name>
+            </properties>
+            <build>
+                <defaultGoal>install</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.ops4j</groupId>
+                        <artifactId>maven-pax-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>provision</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <runner>1.8.5</runner>
+                                    <noDependencies>true</noDependencies>
+                                    <provision>
+                                        <param>--log=error</param>
+                                        <param>--workingDirectory=${package.name}</param>
+                                        <param>
+                                            <![CDATA[
+                                            --vmOptions=-Dorg.osgi.service.http.port=${port} -Dorg.osgi.service.http.useNIO=true -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+                                            ]]>
+                                        </param>
+
+                                        <param>
+                                            --definitionURL=file:///${project.basedir}/platform-demo.xml
+                                        </param>
+
+                                        <param>--systemPackages=javax.xml.ws.wsaddressing</param>
+
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/rxtx-all/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/core/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/display-driver/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/barcode-scanner-driver/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.apache.felix/org.apache.felix.webconsole/4.2.2
+                                        </param>
+                                        <param>
+                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.ds/1.0.0
+                                        </param>
+                                        <param>
+                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.1.0
+                                        </param>
+                                        <param>
+                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.packageadmin/1.0.0
+                                        </param>
+                                    </provision>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 </project>

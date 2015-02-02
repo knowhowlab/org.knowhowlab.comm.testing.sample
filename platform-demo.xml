@@ -1,0 +1,157 @@
+<platform>
+
+    <name>Demo</name>
+    <system>mvn:org.apache.felix/org.apache.felix.main/4.6.0</system>
+
+    <packages>
+        org.osgi.framework; version=1.7.0,
+        org.osgi.framework.hooks.bundle; version=1.1.0,
+        org.osgi.framework.hooks.resolver; version=1.0.0,
+        org.osgi.framework.hooks.service; version=1.1.0,
+        org.osgi.framework.hooks.weaving; version=1.0.0,
+        org.osgi.framework.launch; version=1.1.0,
+        org.osgi.framework.namespace; version=1.0.0,
+        org.osgi.framework.startlevel; version=1.0.0,
+        org.osgi.framework.wiring; version=1.1.0,
+        org.osgi.resource; version=1.0.0,
+        org.osgi.service.packageadmin; version=1.2.0,
+        org.osgi.service.startlevel; version=1.1.0,
+        org.osgi.service.url; version=1.0.0,
+        org.osgi.util.tracker; version=1.5.1
+    </packages>
+
+    <profile name="minimal" default="true">
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.osgi/org.osgi.core/5.0.0@1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.osgi/org.osgi.compendium/5.0.0@1</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.slf4j/slf4j-api/1.7.7@1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.slf4j/jul-to-slf4j/1.7.7@1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:ch.qos.logback/logback-core/1.1.2@1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:ch.qos.logback/logback-classic/1.1.2@1</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.log/1.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.8.0</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.metatype/1.0.10</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.scr/1.8.2</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency (for webconsole)</name>
+            <url>mvn:commons-io/commons-io/1.4</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for webconsole)</name>
+            <url>mvn:commons-fileupload/commons-fileupload/1.2.2</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for webconsole)</name>
+            <url>wrap:mvn:org.json/json/20090211</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency (all)</name>
+            <url>mvn:org.apache.geronimo.specs/geronimo-servlet_3.0_spec/1.0</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.asm/3.3_2</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.geronimo.specs/geronimo-annotation_1.1_spec/1.0.1</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.eclipse.jetty.aggregate/jetty-all-server/8.1.9.v20130131</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.ops4j.pax.web/pax-web-api/3.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.ops4j.pax.web/pax-web-spi/3.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.ops4j.pax.web/pax-web-runtime/3.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.ops4j.pax.web/pax-web-jetty/3.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.ops4j.pax.web/pax-web-extender-war/3.0.1</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for PaxWeb)</name>
+            <url>mvn:org.ops4j.pax.swissbox/pax-swissbox-core/1.6.0</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for PaxWeb)</name>
+            <url>mvn:org.ops4j.base/ops4j-base-lang/1.4.0</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for PaxWeb)</name>
+            <url>mvn:org.apache.xbean/xbean-finder/3.13</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency (for PaxWeb)</name>
+            <url>mvn:org.apache.xbean/xbean-bundleutils/3.13</url>
+        </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.slf4j/jcl-over-slf4j/1.7.5@1</url>
+        </bundle>
+    </profile>
+
+    <profile name="tui" extends="minimal">
+        <bundle>
+            <name>Apache Felix Gogo Command (0.12.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.command-0.12.0.link</url>
+        </bundle>
+        <bundle>
+            <name>Apache Felix Gogo Runtime (0.10.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.runtime-0.10.0.link</url>
+        </bundle>
+        <bundle>
+            <name>Apache Felix Gogo Shell (0.10.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.shell-0.10.0.link</url>
+        </bundle>
+    </profile>
+
+</platform>
