@@ -220,18 +220,6 @@
                                         <param>
                                             mvn:org.knowhowlab.comm.sample/barcode-scanner-driver/${project.version}
                                         </param>
-                                        <param>
-                                            mvn:org.apache.felix/org.apache.felix.webconsole/4.2.2
-                                        </param>
-                                        <param>
-                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.ds/1.0.0
-                                        </param>
-                                        <param>
-                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.1.0
-                                        </param>
-                                        <param>
-                                            mvn:org.apache.felix/org.apache.felix.webconsole.plugins.packageadmin/1.0.0
-                                        </param>
                                     </provision>
                                 </configuration>
                             </execution>

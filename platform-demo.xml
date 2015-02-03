@@ -137,6 +137,23 @@
             <name>Test Dependency</name>
             <url>mvn:org.slf4j/jcl-over-slf4j/1.7.5@1</url>
         </bundle>
+
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.webconsole/4.2.2</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.ds/1.0.0</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/1.1.0</url>
+        </bundle>
+        <bundle>
+            <name>Test Dependency</name>
+            <url>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.packageadmin/1.0.0</url>
+        </bundle>
     </profile>
 
     <profile name="tui" extends="minimal">
