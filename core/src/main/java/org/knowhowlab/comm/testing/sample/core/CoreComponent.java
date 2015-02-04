@@ -15,16 +15,28 @@ import java.util.logging.Logger;
         metatype = false, policy = ConfigurationPolicy.IGNORE)
 @Service(BarcodeListener.class)
 public class CoreComponent implements BarcodeListener {
-    private static final Logger logger = Logger.getLogger(CoreComponent.class.getName());
+    private static final Logger LOG = Logger.getLogger(CoreComponent.class.getName());
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY, policy = ReferencePolicy.STATIC)
-    private Display display;    
-    
+    private Display display;
+
+    @Activate
+    public void activate() {
+        display.print("Cash desk\nWelcome!\n");
+        LOG.info("ACTIVATED");
+    }
+
+    @Deactivate
+    public void deactivate() {
+        display.print("Cash desk\nBye!\n");
+        LOG.info("DEACTIVATED");
+    }
+
     @Override
     public void scanned(byte[] code) {
         String barcode = new String(code, Charset.defaultCharset());
-        logger.info(String.format("Data scanned: %s", barcode));
-        
+        LOG.info(String.format("Data scanned: %s", barcode));
+
         display.print(barcode);
     }
 }

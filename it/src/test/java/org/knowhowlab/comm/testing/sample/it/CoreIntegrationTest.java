@@ -94,6 +94,23 @@ public class CoreIntegrationTest extends AbstractTest {
 
     @Test
     public void testCore() throws Exception {
+        // display config
+        ConfigurationAdminUtils.supplyConfiguration(bc, "display", null, new HashMap() {{
+            put(".port", "COM3");
+        }}, 0);
+
+        CommPortIdentifier com4Id = CommPortIdentifier.getPortIdentifier("COM4");
+        CommPort com4 = com4Id.open("Test", 2000);
+        byte[] buff = new byte[32];
+        int read = com4.getInputStream().read(buff);
+
+        assertThat(Arrays.copyOf(buff, read), is(equalTo("Cash desk\nWelcome!\n".getBytes(Charset.defaultCharset()))));
+
+        com4.close();
+    }
+
+    @Test
+    public void testScan() throws Exception {
         // scanner config
         ConfigurationAdminUtils.supplyConfiguration(bc, "scanner", null, new HashMap() {{
             put(".port", "COM1");
@@ -103,17 +120,17 @@ public class CoreIntegrationTest extends AbstractTest {
             put(".port", "COM3");
         }}, 0);
 
-        TimeUnit.MILLISECONDS.sleep(500);
+        CommPortIdentifier com4Id = CommPortIdentifier.getPortIdentifier("COM4");
+        CommPort com4 = com4Id.open("Test", 2000);
+        byte[] buff = new byte[32];
+        int read = com4.getInputStream().read(buff);
 
         // write to scanner port
         CommPortIdentifier com2Id = CommPortIdentifier.getPortIdentifier("COM2");
         CommPort com2 = com2Id.open("Test", 2000);
         com2.getOutputStream().write("1234567890".getBytes(Charset.defaultCharset()));
 
-        CommPortIdentifier com4Id = CommPortIdentifier.getPortIdentifier("COM4");
-        CommPort com4 = com4Id.open("Test", 2000);
-        byte[] buff = new byte[32];
-        int read = com4.getInputStream().read(buff);
+        read = com4.getInputStream().read(buff);
 
         assertThat(Arrays.copyOf(buff, read), is(equalTo("1234567890".getBytes(Charset.defaultCharset()))));
 
