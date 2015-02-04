@@ -113,7 +113,7 @@ public class CoreIntegrationTest extends AbstractTest {
         // write to scanner port
         CommPortIdentifier com2Id = CommPortIdentifier.getPortIdentifier("COM2");
         CommPort com2 = com2Id.open("Test", 2000);
-        com2.getOutputStream().write("1234567890".getBytes(Charset.defaultCharset()));
+        com2.getOutputStream().write("1234567890\r".getBytes(Charset.defaultCharset()));
 
         read = com4.getInputStream().read(buff);
 

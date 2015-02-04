@@ -5,7 +5,6 @@ package org.knowhowlab.comm.testing.sample.core;
  */
 import org.apache.felix.scr.annotations.*;
 import org.knowhowlab.comm.testing.sample.display.Display;
-import org.knowhowlab.comm.testing.sample.modem.Modem;
 import org.knowhowlab.comm.testing.sample.scanner.BarcodeListener;
 
 import java.nio.charset.Charset;
@@ -20,20 +19,17 @@ public class CoreComponent implements BarcodeListener {
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY, policy = ReferencePolicy.STATIC)
     private Display display;
 
-    @Reference(cardinality = ReferenceCardinality.OPTIONAL_UNARY, policy = ReferencePolicy.DYNAMIC)
-    private volatile Modem modem;
-
     @Activate
     public void activate() {
-        display.print("Cash desk");
-        display.print("Welcome!");
+        display.println("Cash desk");
+        display.println("Welcome!");
         LOG.info("ACTIVATED");
     }
 
     @Deactivate
     public void deactivate() {
-        display.print("Cash desk");
-        display.print("Bye!");
+        display.println("Cash desk");
+        display.println("Bye!");
         LOG.info("DEACTIVATED");
     }
 
@@ -42,10 +38,6 @@ public class CoreComponent implements BarcodeListener {
         String barcode = new String(code, Charset.defaultCharset());
         LOG.info(String.format("Data scanned: %s", barcode));
 
-        display.print(barcode);
-
-        if (modem != null) {
-            modem.sendSMS(String.format("Scanned: %s", barcode));
-        }
+        display.println(barcode);
     }
 }

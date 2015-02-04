@@ -67,6 +67,11 @@ public class DisplayComponent implements Display {
     }
 
     @Override
+    public void println(String text) {
+        write(text.getBytes(Charset.defaultCharset()));
+        write(new byte[] {0x0D, 0x0A});
+    }
+    @Override
     public void print(String text) {
         write(text.getBytes(Charset.defaultCharset()));
     }
@@ -74,8 +79,6 @@ public class DisplayComponent implements Display {
     private void write(byte[] data) {
         try {
             serialPort.getOutputStream().write(data);
-            serialPort.getOutputStream().write(0x0D);
-            serialPort.getOutputStream().write(0x0A);
         } catch (IOException e) {
             LOG.log(Level.WARNING, "Unable to write data", e);
         }

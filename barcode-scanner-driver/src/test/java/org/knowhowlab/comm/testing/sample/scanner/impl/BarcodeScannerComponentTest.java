@@ -47,7 +47,7 @@ public class BarcodeScannerComponentTest {
         CommPortIdentifier com2Id = CommPortIdentifier.getPortIdentifier("COM2");
         CommPort com2 = com2Id.open("Test", 2000);
 
-        com2.getOutputStream().write("1234567890".getBytes(Charset.defaultCharset()));
+        com2.getOutputStream().write("1234567890\r".getBytes(Charset.defaultCharset()));
 
         assertThat(listener.getLatestCode(), is(equalTo("1234567890".getBytes(Charset.defaultCharset()))));
 

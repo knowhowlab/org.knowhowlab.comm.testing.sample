@@ -8,6 +8,7 @@ import org.knowhowlab.comm.testing.sample.scanner.BarcodeListener;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -195,7 +196,17 @@ public class BarcodeScannerComponent {
                         if ((read = inputStream.read(byteBuff)) == -1) {
                             break;
                         }
-                        publishScannedData(Arrays.copyOf(byteBuff, read));
+                        for (int i = 0; i < read; i++) {
+                            byte b = byteBuff[i];
+                            switch (b) {
+                                case 0x0D:
+                                    publishScannedData(buff.toString().getBytes(Charset.defaultCharset()));
+                                    buff.delete(0, buff.length());
+                                    break;
+                                default:
+                                    buff.append((char)b);
+                            }
+                        }
                     }
                 } catch (IOException e) {
                     LOG.log(Level.WARNING, String.format("Read error from port %s", serialPort), e);

@@ -43,7 +43,7 @@ public class DisplayComponentTest {
         CommPortIdentifier com2Id = CommPortIdentifier.getPortIdentifier("COM2");
         CommPort com2 = com2Id.open("Test", 2000);
         
-        displayComponent.print("Hello World!");
+        displayComponent.println("Hello World!");
 
         byte[] buff = new byte[32];
         int read = com2.getInputStream().read(buff);

@@ -59,11 +59,6 @@
             <artifactId>barcode-scanner-driver</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.knowhowlab.comm.sample</groupId>
-            <artifactId>modem-driver</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
