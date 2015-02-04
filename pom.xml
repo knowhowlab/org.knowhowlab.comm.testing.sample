@@ -174,6 +174,7 @@
                 <module>display-device-mock</module>
                 <module>barcode-scanner-driver</module>
                 <module>barcode-scanner-device-mock</module>
+                <module>modem-driver</module>
                 <module>core</module>
                 <module>it</module>
             </modules>
@@ -229,6 +230,9 @@
                                         </param>
                                         <param>
                                             mvn:org.knowhowlab.comm.sample/barcode-scanner-driver/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/modem-driver/${project.version}
                                         </param>
                                         <param>
                                             mvn:org.knowhowlab.comm.sample/display-device-mock/${project.version}

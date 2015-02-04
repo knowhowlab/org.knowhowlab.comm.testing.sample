@@ -1,11 +1,12 @@
-package org.knowhowlab.comm.testing.sample.display.impl;
+package org.knowhowlab.comm.testing.sample.modem.impl;
 
 import gnu.io.*;
 import org.apache.felix.scr.annotations.*;
-import org.knowhowlab.comm.testing.sample.display.Display;
+import org.knowhowlab.comm.testing.sample.modem.Modem;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,30 +14,40 @@ import java.util.logging.Logger;
 /**
  * @author dpishchukhin
  */
-@Component(specVersion = "1.2", immediate = true, name = "display", label = "Sample Display", description = "Sample Display",
+@Component(specVersion = "1.2", immediate = true, name = "modem", label = "Sample Modem", description = "Sample Modem",
         metatype = true, policy = ConfigurationPolicy.REQUIRE)
 @Properties({
-    @Property(name = ".port", label = "Serial Port", description = "Serial Port"),
-    @Property(name = ".baudrate", label = "Baudrate", description = "Baudrate", intValue = 9600),
-    @Property(name = ".databits", label = "Databits", description = "Databits", intValue = 8),
-    @Property(name = ".stopbits", label = "Stopbits", description = "Stopbits", intValue = 1),
-    @Property(name = ".parity", label = "Parity", description = "Parity", intValue = 0)
+        @Property(name = ".port", label = "Serial Port", description = "Serial Port"),
+        @Property(name = ".baudrate", label = "Baudrate", description = "Baudrate", intValue = 9600),
+        @Property(name = ".databits", label = "Databits", description = "Databits", intValue = 8),
+        @Property(name = ".stopbits", label = "Stopbits", description = "Stopbits", intValue = 1),
+        @Property(name = ".parity", label = "Parity", description = "Parity", intValue = 0),
+        @Property(name = ".number", label = "Delivery Number", description = "Delivery Number")
 })
-@Service(Display.class)
-public class DisplayComponent implements Display {
-    private static final Logger LOG = Logger.getLogger(DisplayComponent.class.getName());
+@Service(Modem.class)
+public class ModemComponent implements Modem {
+    private static final Logger LOG = Logger.getLogger(ModemComponent.class.getName());
 
     private static final String PORT_CONFIG_PROP = ".port";
     private static final String BAUDRATE_CONFIG_PROP = ".baudrate";
     private static final String DATABITS_CONFIG_PROP = ".databits";
     private static final String STOPBITS_CONFIG_PROP = ".stopbits";
     private static final String PARITY_CONFIG_PROP = ".parity";
+    private static final String NUMBER_CONFIG_PROP = ".number";
+
+    private static final String CMGF_COMMAND = "AT+CMGF=1\r";
+    private static final String CMGS_COMMAND_TEMPLATE = "AT+CMGS=\"%s\"\r%s\u001A";
+    private static final String CMGS_ANSWER_TEMPLATE = "+CMGS: {1}\r{0}";
+    private static final String OK_ANSWER = "OK";
+    private static final String DEFAULT_ANSWER_TEMPLATE = "{0}";
+    private static final String ERROR_ANSWER = "ERROR";
 
     private String port;
     private int baudrate;
     private int databits;
     private int stopbits;
     private int parity;
+    private String number;
 
     private SerialPort serialPort;
 
@@ -46,7 +57,45 @@ public class DisplayComponent implements Display {
 
         openConnectionToDevice();
 
+        if (sendCommand(CMGF_COMMAND, DEFAULT_ANSWER_TEMPLATE)) {
+            LOG.info("Modem is connected");
+        } else {
+            LOG.warning("Modem is not connected");
+        };
+
         LOG.info("ACTIVATED");
+    }
+
+    private boolean sendCommand(String command, String answerTemplate) {
+        LOG.info(String.format("-> %s", command));
+
+        write(String.format("%s", command).getBytes(Charset.defaultCharset()));
+
+        String answer = readAnswer();
+        LOG.info(String.format("<- %s", answer));
+        try {
+            return OK_ANSWER.equals(new MessageFormat(answerTemplate).parse(answer)[0]);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Unexpected answer: " + answer);
+            return false;
+        }
+    }
+
+    private String readAnswer() {
+        byte[] buff = new byte[32];
+        int read;
+        try {
+            read = serialPort.getInputStream().read(buff);
+        } catch (IOException e) {
+            LOG.log(Level.WARNING, "Read error", e);
+            return ERROR_ANSWER;
+        }
+        if (read > 0) {
+            return new String(buff, 0, read, Charset.defaultCharset()).trim();
+        } else {
+            LOG.warning("No answer");
+            return ERROR_ANSWER;
+        }
     }
 
     @Deactivate
@@ -67,20 +116,18 @@ public class DisplayComponent implements Display {
     }
 
     @Override
-    public void print(String text) {
-        write(text.getBytes(Charset.defaultCharset()));
+    public boolean sendSMS(String text) {
+        return sendCommand(String.format(CMGS_COMMAND_TEMPLATE, number, text), CMGS_ANSWER_TEMPLATE);
     }
 
     private void write(byte[] data) {
         try {
             serialPort.getOutputStream().write(data);
-            serialPort.getOutputStream().write(0x0D);
-            serialPort.getOutputStream().write(0x0A);
         } catch (IOException e) {
             LOG.log(Level.WARNING, "Unable to write data", e);
         }
     }
-    
+
     private boolean isPortOpened() {
         return serialPort != null;
     }
@@ -159,6 +206,11 @@ public class DisplayComponent implements Display {
         Object parityProp = properties.get(PARITY_CONFIG_PROP);
         if (parityProp != null && (parityProp instanceof Integer) && !parityProp.equals(parity)) {
             parity = (Integer) parityProp;
+            newValues = true;
+        }
+        Object numberProp = properties.get(NUMBER_CONFIG_PROP);
+        if (numberProp != null && (numberProp instanceof String) && !numberProp.equals(number)) {
+            number = (String) numberProp;
             newValues = true;
         }
 

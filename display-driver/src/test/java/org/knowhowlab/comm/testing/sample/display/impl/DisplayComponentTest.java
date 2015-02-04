@@ -47,7 +47,7 @@ public class DisplayComponentTest {
 
         byte[] buff = new byte[32];
         int read = com2.getInputStream().read(buff);
-        assertThat(new String(buff, 0, read), is(equalTo("Hello World!")));
+        assertThat(new String(buff, 0, read), is(equalTo("Hello World!\r\n")));
         com2.close();
 
         displayComponent.deactivate();

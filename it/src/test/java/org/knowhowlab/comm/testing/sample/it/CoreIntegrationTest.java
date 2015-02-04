@@ -69,8 +69,9 @@ public class CoreIntegrationTest extends AbstractTest {
                 mavenBundle().groupId("org.knowhowlab.comm").artifactId("org.knowhowlab.comm.testing.rxtx").version("0.2-SNAPSHOT"),
                 mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("core").version(System.getProperty("project.version")),
                 mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("display-driver").version(System.getProperty("project.version")),
-                mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("barcode-scanner-driver").version(System.getProperty("project.version"))
-                
+                mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("barcode-scanner-driver").version(System.getProperty("project.version")),
+                mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("modem-driver").version(System.getProperty("project.version"))
+
                 //,vmOptions("-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005")
         );
         return combine(options, baseConfiguration());
@@ -88,7 +89,7 @@ public class CoreIntegrationTest extends AbstractTest {
         byte[] buff = new byte[32];
         int read = com4.getInputStream().read(buff);
 
-        assertThat(Arrays.copyOf(buff, read), is(equalTo("Cash desk\nWelcome!\n".getBytes(Charset.defaultCharset()))));
+        assertThat(Arrays.copyOf(buff, read), is(equalTo("Cash desk\r\nWelcome!\r\n".getBytes(Charset.defaultCharset()))));
 
         com4.close();
     }
@@ -116,7 +117,7 @@ public class CoreIntegrationTest extends AbstractTest {
 
         read = com4.getInputStream().read(buff);
 
-        assertThat(Arrays.copyOf(buff, read), is(equalTo("1234567890".getBytes(Charset.defaultCharset()))));
+        assertThat(Arrays.copyOf(buff, read), is(equalTo("1234567890\r\n".getBytes(Charset.defaultCharset()))));
 
         com2.close();
         com4.close();
