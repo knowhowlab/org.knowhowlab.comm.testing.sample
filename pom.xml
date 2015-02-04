@@ -85,12 +85,12 @@
             <dependency>
                 <groupId>org.knowhowlab.comm</groupId>
                 <artifactId>org.knowhowlab.comm.rxtx-patched</artifactId>
-                <version>0.1</version>
+                <version>0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.knowhowlab.comm</groupId>
                 <artifactId>org.knowhowlab.comm.testing.rxtx</artifactId>
-                <version>0.1</version>
+                <version>0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.knowhowlab.osgi</groupId>
@@ -101,6 +101,11 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.scr.annotations</artifactId>
                 <version>1.9.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.gogo.runtime</artifactId>
+                <version>0.10.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -166,7 +171,9 @@
             <modules>
                 <module>rxtx-all</module>
                 <module>display-driver</module>
+                <module>display-device-mock</module>
                 <module>barcode-scanner-driver</module>
+                <module>barcode-scanner-device-mock</module>
                 <module>core</module>
                 <module>it</module>
             </modules>
@@ -212,6 +219,9 @@
                                             mvn:org.knowhowlab.comm.sample/rxtx-all/${project.version}
                                         </param>
                                         <param>
+                                            mvn:org.knowhowlab.comm/org.knowhowlab.comm.testing.rxtx/0.2-SNAPSHOT
+                                        </param>
+                                        <param>
                                             mvn:org.knowhowlab.comm.sample/core/${project.version}
                                         </param>
                                         <param>
@@ -219,6 +229,12 @@
                                         </param>
                                         <param>
                                             mvn:org.knowhowlab.comm.sample/barcode-scanner-driver/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/display-device-mock/${project.version}
+                                        </param>
+                                        <param>
+                                            mvn:org.knowhowlab.comm.sample/barcode-scanner-device-mock/${project.version}
                                         </param>
                                     </provision>
                                 </configuration>
