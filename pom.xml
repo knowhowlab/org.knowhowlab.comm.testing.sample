@@ -85,12 +85,12 @@
             <dependency>
                 <groupId>org.knowhowlab.comm</groupId>
                 <artifactId>org.knowhowlab.comm.rxtx-patched</artifactId>
-                <version>0.2-SNAPSHOT</version>
+                <version>0.2</version>
             </dependency>
             <dependency>
                 <groupId>org.knowhowlab.comm</groupId>
                 <artifactId>org.knowhowlab.comm.testing.rxtx</artifactId>
-                <version>0.2-SNAPSHOT</version>
+                <version>0.2</version>
             </dependency>
             <dependency>
                 <groupId>org.knowhowlab.osgi</groupId>
@@ -220,7 +220,7 @@
                                             mvn:org.knowhowlab.comm.sample/rxtx-all/${project.version}
                                         </param>
                                         <param>
-                                            mvn:org.knowhowlab.comm/org.knowhowlab.comm.testing.rxtx/0.2-SNAPSHOT
+                                            mvn:org.knowhowlab.comm/org.knowhowlab.comm.testing.rxtx/0.2
                                         </param>
                                         <param>
                                             mvn:org.knowhowlab.comm.sample/core/${project.version}

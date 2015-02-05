@@ -65,8 +65,8 @@ public class CoreIntegrationTest extends AbstractTest {
         Option[] options = options(
                 mavenBundle().groupId("org.apache.felix").artifactId("org.apache.felix.configadmin").version("1.8.0"),
                 mavenBundle().groupId("org.apache.felix").artifactId("org.apache.felix.scr").version("1.8.2"),
-                mavenBundle().groupId("org.knowhowlab.comm").artifactId("org.knowhowlab.comm.rxtx-patched").version("0.2-SNAPSHOT"),
-                mavenBundle().groupId("org.knowhowlab.comm").artifactId("org.knowhowlab.comm.testing.rxtx").version("0.2-SNAPSHOT"),
+                mavenBundle().groupId("org.knowhowlab.comm").artifactId("org.knowhowlab.comm.rxtx-patched").version("0.2"),
+                mavenBundle().groupId("org.knowhowlab.comm").artifactId("org.knowhowlab.comm.testing.rxtx").version("0.2"),
                 mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("core").version(System.getProperty("project.version")),
                 mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("display-driver").version(System.getProperty("project.version")),
                 mavenBundle().groupId("org.knowhowlab.comm.sample").artifactId("barcode-scanner-driver").version(System.getProperty("project.version")),
