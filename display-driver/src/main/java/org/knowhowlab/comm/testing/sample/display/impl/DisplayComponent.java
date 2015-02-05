@@ -68,8 +68,7 @@ public class DisplayComponent implements Display {
 
     @Override
     public void println(String text) {
-        write(text.getBytes(Charset.defaultCharset()));
-        write(new byte[] {0x0D, 0x0A});
+        write(String.format("%s\r\n", text).getBytes(Charset.defaultCharset()));
     }
     @Override
     public void print(String text) {

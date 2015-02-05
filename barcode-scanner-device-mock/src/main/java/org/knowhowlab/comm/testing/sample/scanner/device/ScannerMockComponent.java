@@ -81,7 +81,7 @@ public class ScannerMockComponent {
     public void scan(@Descriptor("Barcode") String barcode) {
         LOG.info(String.format("Scanned barcode: %s", barcode));
         try {
-            serialPort.getOutputStream().write(barcode.getBytes(Charset.defaultCharset()));
+            serialPort.getOutputStream().write(String.format("%s\r", barcode).getBytes(Charset.defaultCharset()));
         } catch (IOException e) {
             LOG.log(Level.WARNING, "Unable to send barcode", e);
         }
